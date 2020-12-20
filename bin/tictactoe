@@ -1,3 +1,47 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment'
+
+def intro 
+    puts "Welcome to Tic-Tac-Toe, player!"
+    play
+end
+
+def play
+    puts "What kind of game do you want to play - 0 (computers only), 1, or 2-player?"
+    puts "Alternatively, say exit to exit."
+    get_user_input
+    puts "Would you like to play again? Or would you like to exit?"
+    get_user_input
+end
+
+def get_user_input
+    input = gets.strip
+    case input 
+    when "yes"
+        play
+    when "exit"
+        puts "Okay, thanks for playing! Bye!"
+        exit(0)
+    when "0"
+        puts "Computer vs. computer, cool!"
+        puts "Computer 1, go!"
+        game = Game.new(Players::Computer.new("X"), Players::Computer.new("O"), Board.new)
+        game.play
+    when "1"
+        puts "Human vs. computer... good luck, Human."
+        puts "Your turn first. Pick a square, 1-9, starting in the upper left-hand corner."
+        game = Game.new(Players::Human.new("X"), Players::Computer.new("O"), Board.new)
+        game.play
+    when "2"
+        puts "Mano a mano, gotcha."
+        puts "Player 1? Pick a square, 1-9, starting in the upper left-hand corner."
+        game = Game.new(Players::Human.new("X"), Players::Human.new("O"), Board.new)
+        game.play
+    else
+        puts "Hmm... I don't recognize that input. Choose 0, 1, 2, or exit."
+        get_user_input
+    end
+end
+
+intro
